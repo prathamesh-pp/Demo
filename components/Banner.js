@@ -1,9 +1,11 @@
-
+// components/Banner.js
 export default function Banner() {
   return (
-    <div className="bg-blue-500 text-white p-6 text-center rounded-lg">
-      <h1 className="text-2xl font-semibold">Welcome to My Site!</h1>
-      <p className="text-sm mt-2">Your Next.js journey starts here 🚀</p>
-    </div>
+    <section className="card text-center mt-4">
+      <h2 className="text-2xl font-semibold mb-2 text-[var(--color-brand-500)]">
+        Welcome to SocialConnect
+      </h2>
+      <p className="muted">Connect, share, and engage with your community.</p>
+    </section>
   );
 }

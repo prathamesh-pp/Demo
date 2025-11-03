@@ -1,38 +1,42 @@
-'use client'
-import Link from 'next/link'
-import { useState } from 'react'
+// src/app/register/page.js
+"use client";
+import { useState } from "react";
 
 export default function Register() {
-  const [form, setForm] = useState({ username: '', email: '', password: '' })
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
 
-  function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    alert('Register: Backend needed')
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`Registered as ${form.name}`);
+  };
 
   return (
-    <div className="flex justify-center items-center min-h-[70vh]">
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-8 space-y-6">
-        <h1 className="text-3xl font-bold text-purple-600 text-center">Create your account</h1>
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <input type="text" name="username" placeholder="Username" value={form.username} onChange={handleChange} required className="w-full border rounded-md px-4 py-2 focus:ring-2 focus:ring-purple-500"/>
-          <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required className="w-full border rounded-md px-4 py-2 focus:ring-2 focus:ring-purple-500"/>
-          <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} required className="w-full border rounded-md px-4 py-2 focus:ring-2 focus:ring-purple-500"/>
-          <button type="submit" className="w-full py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-md text-white text-lg font-semibold transition hover:opacity-90">
-            Register
-          </button>
-        </form>
-        <div className="text-center">
-          <span className="text-gray-600">Already have an account? </span>
-          <Link className="text-purple-700 font-medium underline" href="/login">
-            Login
-          </Link>
-        </div>
-      </div>
-    </div>
-  )
+    <section className="container max-w-md mt-8">
+      <h2 className="text-xl font-semibold mb-4">Register</h2>
+      <form onSubmit={handleSubmit} className="card flex flex-col gap-3">
+        <input
+          type="text"
+          placeholder="Full Name"
+          className="p-2 border rounded-md bg-transparent"
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          className="p-2 border rounded-md bg-transparent"
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          className="p-2 border rounded-md bg-transparent"
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
+          required
+        />
+        <button className="btn btn-primary">Sign Up</button>
+      </form>
+    </section>
+  );
 }

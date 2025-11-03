@@ -1,45 +1,38 @@
-'use client'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+// components/navbar.js
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Navbar() {
-  const router = useRouter()
-  const [query, setQuery] = useState('')
+  const [theme, setTheme] = useState("light");
 
-  function handleSearch(e) {
-    e.preventDefault()
-    alert('Implement search: ' + query)
-  }
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme") || "light";
+    setTheme(storedTheme);
+    document.documentElement.classList.toggle("dark", storedTheme === "dark");
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    localStorage.setItem("theme", newTheme);
+  };
 
   return (
-    <nav className="w-full bg-white border-b border-gray-200 shadow-sm sticky top-0 z-30">
-      <div className="container mx-auto flex flex-wrap items-center justify-between py-3 px-2">
-        <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="Logo" className="w-8 h-8"/>
-          <span className="font-bold text-xl text-purple-600">MySocial</span>
-        </Link>
-        <ul className="flex items-center gap-6 text-gray-700 font-medium">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/profile">Profile</Link></li>
-          <li><Link href="/friends">Friends</Link></li>
-          <li><Link href="/messages">Messages</Link></li>
-          <li><Link href="/notifications">Notifications</Link></li>
-        </ul>
-        <form onSubmit={handleSearch} className="flex items-center gap-2">
-          <input
-            type="text"
-            value={query}
-            onChange={e => setQuery(e.target.value)}
-            placeholder="Search..."
-            className="px-3 py-1 rounded-md border border-gray-300 focus:border-purple-400"
-          />
-          <button type="submit" className="bg-purple-600 text-white px-3 py-1 rounded-md hover:bg-purple-700 transition">Search</button>
-        </form>
-        <button className="ml-4 px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition" onClick={()=>router.push('/login')}>
-          Logout
-        </button>
+    <nav className="container flex justify-between items-center py-3 border-b border-gray-300 dark:border-gray-700">
+      <Link href="/" className="text-xl font-semibold text-[var(--color-brand-500)]">
+        SocialConnect
+      </Link>
+      <div className="flex gap-4 text-sm">
+        <Link href="/friends">Friends</Link>
+        <Link href="/messages">Messages</Link>
+        <Link href="/notifications">Notifications</Link>
+        <Link href="/profile">Profile</Link>
       </div>
+      <button onClick={toggleTheme} className="btn btn-primary text-xs">
+        {theme === "dark" ? "Light" : "Dark"} Mode
+      </button>
     </nav>
-  )
+  );
 }

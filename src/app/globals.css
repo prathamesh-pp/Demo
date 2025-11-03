@@ -1,26 +1,113 @@
-@import "tailwindcss";
+/* src/app/globals.css */
 
+/* Tailwind base layers */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Theme variables (easy to change color scheme here) --- */
+/* Light theme defaults */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-brand-50: #e6f7ff;
+  --color-brand-100: #bfeeff;
+  --color-brand-200: #80ddff;
+  --color-brand-500: #0ea5e9; /* primary */
+  --color-bg: #f8fafc;
+  --color-panel: #ffffff;
+  --color-text: #0f172a;
+  --color-muted: #475569;
+  --radius: 12px;
+  --glass: rgba(255,255,255,0.6);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark theme overrides */
+html.dark {
+  --color-brand-50: #05283a;
+  --color-brand-100: #053f55;
+  --color-brand-200: #075d79;
+  --color-brand-500: #22c1c3; /* accent in dark */
+  --color-bg: #071128;
+  --color-panel: #0b1721;
+  --color-text: #e6eef6;
+  --color-muted: #94a3b8;
+  --glass: rgba(10,16,20,0.5);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Make body use variables */
+html, body, #root {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply antialiased;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 220ms ease, color 220ms ease;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Panels / cards */
+.card {
+  background: var(--color-panel);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+  padding: 1rem;
+  transition: background-color 220ms ease, box-shadow 220ms ease;
+}
+
+/* Utilities */
+.btn {
+  @apply inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md select-none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.02));
+  border: 1px solid rgba(0,0,0,0.06);
+  color: var(--color-text);
+  transition: transform 120ms ease, background-color 160ms ease;
+}
+.btn:active { transform: translateY(1px) }
+
+/* Primary button using CSS var */
+.btn-primary {
+  background-color: var(--color-brand-500);
+  color: white;
+  border: none;
+}
+html.dark .btn { border-color: rgba(255,255,255,0.04) }
+
+/* small helper for subtle text */
+.muted { color: var(--color-muted); font-size: 0.95rem; }
+
+/* quick responsive container */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+/* minimal navbar styling helper */
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+/* Card grid to demo visual change */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Small subtle transition for interactive items */
+.hover-lift:hover {
+  transform: translateY(-6px);
+  transition: transform 220ms cubic-bezier(.2,.9,.3,1);
+}
+
+/* Make sure images and svg don't overflow cards */
+.card img, .card svg {
+  max-width: 100%;
+  display: block;
 }
